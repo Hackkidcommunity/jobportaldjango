@@ -1,0 +1,67 @@
+from django.urls import path
+from django.contrib import admin
+from jobapp import views
+from .views import AdminProfileUpdateView  # Import the view class
+from .views import AdminPasswordResetView  # Import the view class
+
+
+urlpatterns = [
+    path("", views.index, name="index"),
+
+    path('admin/', admin.site.urls),
+    path("user_login/", views.user_login, name="user_login"),
+    # path("admin_login/", views.admin_login, name="admin_login"),
+    path("logout/", views.Logout, name="logout"),
+    path("signup/", views.signup, name="signup"),
+    path("user_homepage/", views.user_homepage, name="user_homepage"),
+    path("all_jobs/", views.all_jobs, name="all_jobs"),
+    path("job_detail/<int:myid>/", views.job_detail, name="job_detail"),
+    path("job_apply/<int:myid>/", views.job_apply, name="job_apply"),
+
+    path("company_login/", views.company_login, name="company_login"),
+    path("company_signup/", views.company_signup, name="company_signup"),
+    path("company_homepage/", views.company_homepage, name="company_homepage"),
+    path("add_job/", views.add_job, name="add_job"),
+    path("job_list/", views.job_list, name="job_list"),
+    path("all_applicants/", views.all_applicants, name="all_applicants"),
+    path("edit_job/<int:myid>/", views.edit_job, name="edit_job"),
+    path("company_logo/<int:myid>/", views.company_logo, name="company_logo"),
+    path("admin_login/", views.admin_login, name="admin_login"),
+    path("all_companies/", views.all_companies, name="all_companies"),
+    path("view_applicants/", views.view_applicants, name="view_applicants"),
+    path("change_status/<int:myid>/", views.change_status, name="change_status"),
+    path("accepted_companies/", views.accepted_companies, name="accepted_companies"),
+    path("pending_companies/", views.pending_companies, name="pending_companies"),
+    path("rejected_companies/", views.rejected_companies, name="rejected_companies"),
+    path("delete_company/<int:myid>/", views.delete_company, name="delete_company"),
+    path("delete_applicant/<int:myid>/", views.delete_applicant, name="delete_applicant"),
+    path("common_login", views.common_login, name="common_login"),
+    path("reset_password", views.reset_password, name="reset_password"),
+    path('change_password/', views.change_password, name='change_password'),
+    path('password_change_done/', views.password_change_done, name='password_change_done'),
+    path('admin/profile/update/', AdminProfileUpdateView.as_view(), name='admin_profile_update'),
+    path('admin/password/reset/', AdminPasswordResetView.as_view(), name='admin_password_reset'), 
+    path("admin_profile_update", views.admin_profile_update, name="admin_profile_update"),
+    path("admin_password_reset", views.admin_password_reset, name="admin_password_reset"),
+    path("admin_dashboard", views.admin_dashboard, name="admin_dashboard"),
+    path('admin_panel/', views.admin_panel, name='admin_panel'),
+    path('block_profile/<str:profile_type>/<int:profile_id>/', views.block_profile, name='block_profile'),
+    path('remove_profile/<str:profile_type>/<int:profile_id>/', views.remove_profile, name='remove_profile'),
+    path('verify_profile/<str:profile_type>/<int:profile_id>/', views.verify_profile, name='verify_profile'),
+    path('job_application_count/', views.job_application_count, name='job_application_count'),
+    path('employer_register/', views.employer_register, name='employer_register'),
+    path('job_seeker_register/', views.job_seeker_register, name='job_seeker_register'),
+    path('approve_profile/<int:user_id>/', views.approve_profile, name='approve_profile'),
+    path('disapprove_profile/<int:user_id>/', views.disapprove_profile, name='disapprove_profile'),
+    path('notifications/', views.admin_notifications, name='admin_notifications'),
+    path('admin/job_approval/', views.admin_job_approval, name='admin_job_approval'),  
+    path('job_search/', views.job_search, name='job_search'),    
+    path('seeker_profiles/', views.seeker_profiles, name='seeker_profiles'),
+    path('applied_jobs/', views.applied_jobs, name='applied_jobs'),
+    path('change_application_status/<int:myid>/', views.change_application_status, name='change_application_status'),
+    path('accept_job/<int:job_id>/', views.accept_job, name='accept_job'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('notificationss/', views.notification_list, name='notification_list'),
+    path('notificationss/<int:notification_id>/', views.notification_detail, name='notification_detail'),
+]
+

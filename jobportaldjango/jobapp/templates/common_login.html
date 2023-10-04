@@ -1,0 +1,58 @@
+{% extends 'basic.html' %}
+
+{% block title %} User Login Page {% endblock %}
+{% block user_login %} active {% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+
+<form method="POST" id="login-form" action="{% url 'common_login' %}"> {% csrf_token %}
+    <div class="container mt-5">
+        <h6>Haven't register yet, then click here        <a href="/signup/" type="submit" class="btn" style="background-color: #4f868c; color: white;">Signup</a>
+            <a href="/company_signup/" type="submit" class="btn" style="background-color: #4f868c; color: white;">CompanySignup</a>
+            
+        </h6>
+        <div class="mb-3">
+            <label for="username" class="form-label"><i style="font-weight: bold;">Username</i></label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label"><i style="font-weight: bold;">Password</i></label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+
+            <a href="#" id="forgot-password">Forgot Password?</a>
+        </div>
+        <br>
+        <input type="submit" value="Submit" class="btn" style="background-color: #4f868c; color: white; font-size: larger; width: 8rem;">
+
+
+
+    </div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var loginForm = document.getElementById('login-form');
+        var usernameInput = document.getElementById('username');
+        var passwordInput = document.getElementById('password');
+        var forgotPasswordLink = document.getElementById('forgot-password');
+
+        loginForm.addEventListener('submit', function (e) {
+            if (!usernameInput.validity.valid || !passwordInput.validity.valid) {
+                e.preventDefault(); // Prevent form submission if fields are invalid
+                alert('Please fill in all required fields.');
+            }
+        });
+
+        forgotPasswordLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            // Implement your password reset functionality here
+            alert('Password reset feature is coming soon.');
+        });
+    });
+</script>
+
+{% endblock %}
+{% block js %}
+
+{% endblock %}

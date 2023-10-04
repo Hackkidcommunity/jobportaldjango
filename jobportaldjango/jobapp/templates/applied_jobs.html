@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <title>{% block title %}{% endblock %}</title>
+  <style>
+    .navbar {
+      background-color: #4f868c;
+    }
+
+    .head1 {
+      color: #FBAD30;
+      font-size: 25px;
+      font-weight: bold;
+      height: 50px;
+    }
+
+    .head2 {
+      color: #EF4926;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    /* Style for the "Applied Jobs" page */
+
+/* Center align the page content */
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+/* Style the filter form */
+form {
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 60%;
+    background-color: #f0f0f0;
+}
+
+label {
+    font-weight: bold;
+}
+
+select {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+button[type="submit"] {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Style the table */
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Style table rows */
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Style the "No applications found" message */
+td[colspan="2"] {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+}
+
+  </style>
+  {% block css %}
+  {% endblock %}
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+      <!-- <a class="navbar-brand" href="/"><span class="head1">Tech</span><span class="head2">Vidvan</span></a> -->
+      <a class="navbar-brand" href="#"><span class="head1">Job</span><span class="head2">Portal</span></a>
+      <div class="container w-50">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link {% block home %}{% endblock %}" aria-current="page" href="/user_homepage/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% block job_list %}{% endblock %}" href="/all_jobs/">Job List</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">notifications</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'job_search' %}">Search</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'applied_jobs' %}">Applied jobs</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout/">Logout</a>
+            </li>
+          </ul>
+          <a class="navbar-brand" style="font-weight: bold; font-family: 'Times New Roman', Times, serif;"
+            href="#">Welcome {{request.user.get_full_name}}</a>
+        </div>
+      </div>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  {% block body %}
+
+  
+    <h1>Applied Jobs</h1>
+    
+    <form action="{% url 'applied_jobs' %}" method="get">
+        <label for="status">Filter by Status:</label>
+        <select name="status" id="status">
+            <option value="all" {% if status_filter == 'all' %}selected{% endif %}>All</option>
+            <option value="applied" {% if status_filter == 'applied' %}selected{% endif %}>Applied</option>
+            <option value="accepted" {% if status_filter == 'accepted' %}selected{% endif %}>Accepted</option>
+            <option value="rejected" {% if status_filter == 'rejected' %}selected{% endif %}>Rejected</option>
+            <option value="viewed" {% if status_filter == 'viewed' %}selected{% endif %}>Viewed</option>
+            <option value="profile_visited" {% if status_filter == 'profile_visited' %}selected{% endif %}>Profile Visited</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+            <tr>
+                <td>{{ application.job.title }}</td>
+                <td>{{ application.get_status_display }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No applications found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+  {% endblock %}
+</body>
+{% block js %}
+{% endblock %}
+
+</html>
+
+</html>

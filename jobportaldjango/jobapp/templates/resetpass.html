@@ -1,0 +1,25 @@
+{% extends 'basic.html' %}
+
+{% block title %} User Login Page {% endblock %}
+{% block user_login %} active {% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %} 
+<form action="{% url 'newpassword' user.id %}">
+    <div class="container mt-5">
+        
+        <div class="mb-3">
+            <label for="password" class="form-label"><i style="font-weight: bold;">Password</i></label>
+            <input type="password" class="form-control" id="password" name="password1" placeholder="Enter Password">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label"><i style="font-weight: bold;">Confirm Password</i></label>
+            <input type="password" class="form-control" id="password" name="password2" placeholder="Enter Password">
+        </div>
+        <br>
+        <input type="submit" value="Submit" class="btn" style="background-color: #4f868c; color: white; font-size: larger; width: 8rem;">
+
+    </div>
+</form>
+
+{% endblock %}

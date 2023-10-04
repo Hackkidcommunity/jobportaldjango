@@ -1,0 +1,29 @@
+
+
+{% extends 'basic.html' %}
+{% block body %} 
+<style>
+    body{
+        background-color: #478c94;
+        color: white;;
+    }
+</style>
+
+    <header>
+
+        {% if user.is_authenticated %}
+        <p>Hello, {{ user.first_name }}! | <a href="{% url 'change_password' %}" style="color: white;">Change Password</a> | <a href="{% url 'logout' %}">Logout</a></p>
+        {% else %}
+        <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">Sign up</a> | <a href="{% url 'password_reset' %}">Reset Password</a></p>
+        {% endif %}
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Add your footer content here -->
+    </footer>
+    {% endblock %}
